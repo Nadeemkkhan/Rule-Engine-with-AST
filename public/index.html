@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rule Engine</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .container { width: 50%; margin: 0 auto; padding-top: 50px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #ddd; padding: 8px; }
+    th { background-color: #f2f2f2; }
+    .result { font-weight: bold; color: green; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Rule Engine Evaluation</h1>
+    <form id="rule-form">
+      <label for="rule">Rule:</label><br>
+      <input type="text" id="rule" name="rule" value="((age > 30 AND department = 'Sales') OR (age < 25 AND department = 'Marketing')) AND (salary > 50000 OR experience > 5)"><br><br>
+      <label for="data">Data (JSON format):</label><br>
+      <textarea id="data" name="data" rows="4" cols="50">{"age": 35, "department": "Sales", "salary": 60000, "experience": 3}</textarea><br><br>
+      <button type="button" onclick="createRule()">Create Rule</button>
+      <button type="button" onclick="combineRules()">Combine Rules</button>
+      <button type="button" onclick="evaluateRule()">Evaluate Rule</button>
+    </form>
+    <h2>AST</h2>
+    <pre id="ast"></pre>
+    <table>
+      <thead>
+        <tr>
+          <th>Attribute</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody id="data-table">
+      </tbody>
+    </table>
+    <p id="result" class="result"></p>
+  </div>
+
+  <script>
+    async function createRule() {
+      const rule = document.getElementById('rule').value;
+      const response = await fetch('/create_rule', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ruleString: rule })
+      });
+      const result = await response.json();
+      document.getElementById('ast').textContent = JSON.stringify(result.rule, null, 2);
+    }
+
+    async function combineRules() {
+      const rule1 = document.getElementById('rule').value;
+      const rule2 = prompt("Enter another rule to combine:");
+      const response = await fetch('/combine_rules', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rules: [rule1, rule2] })
+      });
+      const result = await response.json();
+      document.getElementById('ast').textContent = JSON.stringify(result, null, 2);
+    }
+
+    async function evaluateRule() {
+      const rule = document.getElementById('rule').value;
+      const data = JSON.parse(document.getElementById('data').value);
+      const response = await fetch('/evaluate_rule', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rule: parseRule(rule), data: data })
+      });
+      const result = await response.json();
+      displayResult(data, result);
+    }
+
+    function parseRule(ruleString) {
+      return { type: "AND", left: { type: "operand", value: "age > 30" }, right: { type: "operand", value: "department = 'Sales'" } };
+    }
+
+    function displayResult(data, result) {
+      const dataTable = document.getElementById('data-table');
+      dataTable.innerHTML = '';
+      for (const [key, value] of Object.entries(data)) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${key}</td><td>${value}</td>`;
+        dataTable.appendChild(row);
+      }
+      
+      const resultElement = document.getElementById('result');
+      resultElement.textContent = `Evaluation Result: ${result}`;
+    }
+  </script>
+</body>
+</html>
