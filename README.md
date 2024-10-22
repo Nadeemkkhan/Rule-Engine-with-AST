@@ -1,5 +1,5 @@
-# Rule-Engine-with-AST
 
+# Rule Engine with AST
 
 A simple rule engine built with Node.js and SQLite, allowing for rule creation, combination, and evaluation through a web interface. This application serves as a basic demonstration of a rule engine's functionalities and can be expanded for more complex use cases.
 
@@ -31,20 +31,48 @@ Make sure you have the following installed:
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/Nadeemkkhan/Rule-Engine-with-AST.git
-   cd rule-engine
-   
-2.**Install dependencies**:
-  npm install
-  
-3.**Running the Application Locally**:
-    Start the server: node server.js
-    Open your web browser and go to http://localhost:3000.
-    Your application will be running in http://localhost:3000
+   cd Rule-Engine-with-AST
+   ```
 
-4.**Running the Application Using Docker**:
-      Build the Docker image: docker build -t rule-engine-app .
-      Run the Docker container:docker run -d -p 3000:3000 --name rule-engine-container rule-engine-app
-      
-5.**Access the application at http://localhost:3000.**
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-  
+### Running the Application Locally
+
+1. **Start the server**:
+   ```bash
+   node server.js
+   ```
+
+2. **Open your web browser** and go to [http://localhost:3000](http://localhost:3000).
+
+### Running the Application Using Docker
+
+1. **Build the Docker image**:
+   ```bash
+   docker build -t rule-engine-app .
+   ```
+
+2. **Run the Docker container**:
+   ```bash
+   docker run -d -p 3000:3000 --name rule-engine-container rule-engine-app
+   ```
+
+3. **Access the application** at [http://localhost:3000](http://localhost:3000).
+
+## Usage
+
+- You can create, combine, and evaluate rules using the provided web interface.
+
+## Troubleshooting
+
+- If you encounter issues, ensure all dependencies are installed and that the server is running.
+
+
+## Acknowledgements
+
+Thanks to the open-source community for providing resources and libraries that made this project possible.
+```
+
