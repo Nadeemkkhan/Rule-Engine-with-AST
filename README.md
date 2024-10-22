@@ -1,4 +1,6 @@
+Here’s the updated README file with a section for **Design Choices** included:
 
+```markdown
 # Rule Engine with AST
 
 A simple rule engine built with Node.js and SQLite, allowing for rule creation, combination, and evaluation through a web interface. This application serves as a basic demonstration of a rule engine's functionalities and can be expanded for more complex use cases.
@@ -17,6 +19,14 @@ A simple rule engine built with Node.js and SQLite, allowing for rule creation, 
 - SQLite
 - HTML
 
+## Design Choices
+
+- **Node.js**: Chosen for its non-blocking, event-driven architecture, which is ideal for handling multiple requests efficiently.
+- **SQLite**: A lightweight database solution was selected for its simplicity and ease of use, making it suitable for small to medium-sized applications.
+- **Express.js**: This framework was used to simplify routing and middleware management, allowing for a clean structure in handling HTTP requests.
+- **Modular Code Structure**: The application is designed with modularity in mind, separating concerns between different functionalities (e.g., rule creation, evaluation).
+- **Error Handling**: Basic error handling is implemented to provide feedback for database operations and rule evaluations, ensuring a smoother user experience.
+  
 ## Getting Started
 
 ### Prerequisites
@@ -69,7 +79,6 @@ Make sure you have the following installed:
 ## Troubleshooting
 
 - If you encounter issues, ensure all dependencies are installed and that the server is running.
-
 
 ## Acknowledgements
 
